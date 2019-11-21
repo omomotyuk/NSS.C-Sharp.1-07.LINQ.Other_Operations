@@ -9,7 +9,8 @@ namespace _1_07.LINQ.Other_Operations
         static void Main(string[] args)
         {
             //Ordering();
-            Aggregate();
+            //Aggregate();
+            Partitioning();
         }
         static void Ordering()
         {
@@ -55,7 +56,6 @@ namespace _1_07.LINQ.Other_Operations
             {
                 15, 8, 21, 24, 32, 13, 30, 12, 7, 54, 48, 4, 49, 96
             };
-
             Console.WriteLine($"List has {numbers.Count} numbers.");
 
             // How much money have we made?
@@ -73,7 +73,31 @@ namespace _1_07.LINQ.Other_Operations
             prices.Sort();
             prices.Reverse();
             Console.WriteLine($"Most expensive product costs: ${prices.GetRange(0,1)[0]}");
+        }
 
+        static void Partitioning()
+        {
+            /*
+                Store each number in the following List until a perfect square is detected.
+
+                Ref: https://msdn.microsoft.com/en-us/library/system.math.sqrt(v=vs.110).aspx
+            */
+            List<int> wheresSquaredo = new List<int>()
+            {
+                66, 12, 8, 27, 82, 34, 7, 50, 19, 46, 81, 23, 30, 4, 68, 14
+            };
+
+            List<int> notPerfectSquare = wheresSquaredo.TakeWhile( number => RoundSquare(number) != number ).ToList();
+            Console.WriteLine($"{notPerfectSquare.Count}");
+            foreach( int number in notPerfectSquare )
+            {
+                Console.Write($"{number}, ");
+            }
+        }
+
+        static int RoundSquare( int number )
+        {
+            return Convert.ToInt32(Math.Pow(Math.Round(Math.Sqrt(number)),2));
         }
     }
 }
